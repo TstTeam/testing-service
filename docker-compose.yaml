@@ -1,6 +1,15 @@
 version: '3'
 
 services:
+  nginx-proxy:
+      container_name: nginx
+      image: nginx
+      ports:
+        - "80:80"
+      volumes:
+        - ./nginx-conf/:/etc/nginx/conf.d/
+      network_mode: 
+        "host"
   jenkins-server:
     container_name: jenkins-home
     build:
@@ -13,6 +22,9 @@ services:
       - JENKINS_OPTS="--prefix=/jenkins"
     ports:
       - "8080:8080"
+    networks:
+            vpcbr:
+                ipv4_address: 10.5.0.2
   allure:
     image: "frankescobar/allure-docker-service"
     environment:
@@ -21,17 +33,27 @@ services:
       KEEP_HISTORY_LATEST: 7
     ports:
       - "5050:5050"
-   
+    networks:
+            vpcbr:
+                ipv4_address: 10.5.0.3
   allure-ui:
     image: "frankescobar/allure-docker-service-ui"
     environment:
-      ALLURE_DOCKER_PUBLIC_API_URL: "http://10.5.0.2:5050"
+      ALLURE_DOCKER_PUBLIC_API_URL: "http://10.5.0.3:5050"
       ALLURE_DOCKER_PUBLIC_API_URL_PREFIX: ""
-
     ports:
       - "5252:5252"
-    
+    networks:
+            vpcbr:
+                ipv4_address: 10.5.0.4
 
+networks:
+  vpcbr:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.5.0.0/16
+         gateway: 10.5.0.1
     
 
     
