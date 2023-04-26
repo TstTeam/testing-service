@@ -21,15 +21,17 @@ services:
       KEEP_HISTORY_LATEST: 7
     ports:
       - "5050:5050"
+   
   allure-ui:
     image: "frankescobar/allure-docker-service-ui"
     environment:
-      ALLURE_DOCKER_PUBLIC_API_URL: "http://localhost:5050"
+      ALLURE_DOCKER_PUBLIC_API_URL: "http://10.5.0.2:5050"
       ALLURE_DOCKER_PUBLIC_API_URL_PREFIX: ""
+
     ports:
       - "5252:5252"
-    network_mode: 
-      "host"
+    
+
     
 
     
