@@ -1,9 +1,9 @@
-FROM jenkinsci/blueocean
+FROM jenkins/jenkins:latest
 
 USER root
-RUN apk add --update nodejs npm
-RUN apk update \
-      && apk add sudo \
+RUN apt-get update \
+      && apt-get install -y nodejs npm \
+      && apt-get install -y sudo \
       && rm -rf /var/lib/apt/lists/*
 RUN echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
 USER jenkins
