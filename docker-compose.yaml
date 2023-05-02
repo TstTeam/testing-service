@@ -11,6 +11,16 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "8080:8080"
+  ngrok:
+    image: shkoliar/ngrok:latest
+    ports:
+      - 4551:4551
+    links:
+      - jenkins-server
+    environment:
+      - DOMAIN=jenkins-server
+      - PORT=8080
+      - AUTH_TOKEN=2PDzPXsDBxDng1rQx8MNVtmryfj_3gEXjtUCVJmDzbjqUMWhR
   allure:
     image: "frankescobar/allure-docker-service"
     environment:
