@@ -1,27 +1,6 @@
 version: '3'
 
 services:
-  jenkins-server:
-    container_name: jenkins-home
-    build:
-      context: ./jenkins
-      dockerfile: Dockerfile
-    image: commsult/jenkins:1.0.0
-    volumes:
-      - ${PWD}/jenkins/jenkins_home:/var/jenkins_home/
-      - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-      - "8080:8080"
-  ngrok:
-    image: shkoliar/ngrok:latest
-    ports:
-      - 4551:4551
-    links:
-      - jenkins-server
-    environment:
-      - DOMAIN=jenkins-server
-      - PORT=8080
-      - AUTH_TOKEN=2PDzPXsDBxDng1rQx8MNVtmryfj_3gEXjtUCVJmDzbjqUMWhR
   allure:
     image: "frankescobar/allure-docker-service"
     environment:
@@ -33,7 +12,7 @@ services:
   allure-ui:
     image: "frankescobar/allure-docker-service-ui"
     environment:
-      ALLURE_DOCKER_PUBLIC_API_URL: "http://192.168.56.1:5050"
+      ALLURE_DOCKER_PUBLIC_API_URL: "http://103.175.217.29:5050"
       ALLURE_DOCKER_PUBLIC_API_URL_PREFIX: ""
     ports:
       - "5252:5252"
